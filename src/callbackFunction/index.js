@@ -56,5 +56,7 @@ handleName('susan', value => console.log(value))
 
     // we can use callback functions in array methods, setTimeout, event listerner etc
 
+    Instead of invoking the function then and there, we get to decide when the function is invoked.
+
 
 */
