@@ -44,3 +44,15 @@ const create_UI = (data) => {
 
         The first thing we need to do is to add an `onsubmit` event handler to our HTML form
     */
+
+    // handle form submit
+    const search = (event) => {
+        event.preventDefault()
+        const value = document.querySelector(".header_form-input").value
+        get_movie(value)
+    }
+
+    /*
+        Anytime the user submits the form we get the value then entered in the search box and we pass it to
+        the get_movie(value = "Game of thrones") functtion.
+    */
