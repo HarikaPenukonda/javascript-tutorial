@@ -25,6 +25,12 @@ const get_movie = (value = "Game of thrones") => {
         }else{
             return create_UI(data)
         }
+        /*
+        With our movie search app, for example when we encounter any errors we can handle and display a nice
+        error message to users in the .catch() callback
+        */
+    }).catch((error)=>{
+        console.log(error.message)
     })
     /*
         This is still our get_movie() function, but this time instead of passing the dat to the create_UI function
@@ -33,7 +39,23 @@ const get_movie = (value = "Game of thrones") => {
         Ideally this chain can keep going on and on as long as we want. All we need to is to return the value
         of the promise.
     */
-   
+    /*
+        How to handle errors in promise?
+        Errors that happen within a promise go immediately to the .catch() callback
+
+        .then((data)=>{
+            // any error here will trigger the .catch callback
+        }).catch((error) => {
+            // all errors are caught and handled here
+        })
+
+        The .catch() callback is short for `.then(null,(error) => {})` we can also write above code as
+        .then((data)=>{
+            // any error here will trigger the .catch callback
+        },(error)=>{
+            // all errors are caught and handled here
+        })
+    */
 }
 
 /* 
@@ -84,6 +106,31 @@ const create_UI = (data) => {
     /*
         Anytime the user submits the form we get the value then entered in the search box and we pass it to
         the get_movie(value = "Game of thrones") functtion.
+    */
+
+    /*
+        How to create promises in JavaScript
+
+        To create a promise in JS, we use promise constructor. The constructor takes one argument : a function
+        with 2 parameter - resolve, reject
+
+        const is_true = true
+        const new_promise = new Promise((resolve,reject)=>{
+            if(is_true){
+                // everything went fine
+                resolve()
+            }else{
+                // oops there was an error
+                reject()
+            }
+        })
+
+        Then we can go ahead and use our new_promise by attaching callbacks
+        new_promise.then((response)=>{
+            // everything went fine
+        }).catch((error)=>{
+            // handle errors
+        })
     */
 
     
