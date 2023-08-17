@@ -4,7 +4,36 @@
 */
 const get_movie = (value = "Game of thrones") => {
     fetch(`https://api.tvmaze.com/singlesearch/shows?q=${value}&embed=episodes`)
-    .then((response)=> create_UI(response.json()))
+    .then((response)=> response.json())
+    /*
+    Promise chaining
+        the .then() callback is not really the end. That's because when we return 
+        value of a promise we get another promise. This becomes very useful when we want to run a series of
+        async operations in order.
+
+        For example, our movie API doesnt just return info about a movie, it also return information about all
+        the episodes. Lets say that we really dont want to display all the episodes in GOT, we only want the
+        first four episodes.
+
+        with promise chaining we can easily achieve this:
+    */
+    .then((data)=>{
+        if(data._embedded.episodes.length > 0){
+            const new_data = data._embedded.episodes.slice(0,4)
+            create_UI(data)
+            return create_episodesUI(new_data)
+        }else{
+            return create_UI(data)
+        }
+    })
+    /*
+        This is still our get_movie() function, but this time instead of passing the dat to the create_UI function
+        we return the response .then(response) => response.json(). This creates a new promise, which we can attach
+        more callbacks to.
+        Ideally this chain can keep going on and on as long as we want. All we need to is to return the value
+        of the promise.
+    */
+   
 }
 
 /* 
@@ -56,3 +85,5 @@ const create_UI = (data) => {
         Anytime the user submits the form we get the value then entered in the search box and we pass it to
         the get_movie(value = "Game of thrones") functtion.
     */
+
+    
